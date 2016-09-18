@@ -15,13 +15,14 @@
 */
 
 using Gtk;    
+using Granite;
 
 namespace Diskboot{
     
     /**
      * Main Diskboot class.
      */    
-    public class Diskboot : Object {
+    public class Diskboot : Gtk.Application {
 
         public static int main (string[] args) {
             
@@ -34,24 +35,51 @@ namespace Diskboot{
     }
 
     /**
+
      * Main application class.
      */
-    public class Application : Object {
+    public class Application : Gtk.Application {
 
         construct {
-           
             var window = new Window ();
-            window.title = "Hello, World!";
-            window.border_width = 10;
+            var box = new Box (Orientation.VERTICAL, 250);
+
+            window.title = "Diskbook";
+            window.border_width = 2;
             window.window_position = WindowPosition.CENTER;
-            window.set_default_size (350, 70);
+            window.set_default_size (40, 250);
             window.destroy.connect (Gtk.main_quit);
             
-            var label = new Label ("Hello, World!");
-            
-            window.add (label);
-            window.show_all ();
+            var box_label = new Box (Orientation.VERTICAL, 20);
+            var label_welcome = new Label ("Welcome Diskbook!");
+            box_label.add (label_welcome);
+            box.add (box_label);
 
+            var box_step1 = new Box (Orientation.VERTICAL, 20);
+              var label_usb_devices = new Label ("Step1: You Selected E: as your USB Device!\n");
+              var checkbox_all_devices = new CheckButton.with_label ("Show All Devices?");
+              box_step1.add (label_usb_devices);
+              box_step1.add (checkbox_all_devices);        
+            box.add (box_step1);
+
+            var box_step2 = new Box (Orientation.VERTICAL, 20);
+              var label_distribution = new Label ("Step2: Select a Distribution  to put on E:\n");
+              box_step1.add (label_distribution);
+            box.add (box_step1);
+
+            var box_step3 = new Box (Orientation.VERTICAL, 20);
+              var label_select_iso = new Label ("Browser and select your ubuntu*desktop*.iso");
+              var all_isos = new CheckButton.with_label ("Show All ISOs?");
+              var search_entry = new Granite.Widgets.SearchBar ("Search");
+              var browser = new Button.with_label ("Browser");            
+              box_step1.add (label_select_iso);
+              box_step1.add (all_isos);        
+              box_step1.add (search_entry);        
+              box_step1.add (browser);        
+            box.add (box_step1);
+
+            window.add (box);
+            window.show_all ();
         }
         
         public void init (){

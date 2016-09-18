@@ -18,33 +18,52 @@ using Gtk;
 
 namespace Diskboot{
     
-    public class Diskboot : Object {
+    /**
+     * Main Diskboot class.
+     */    
+    public class Diskboot : Gtk.Application {
 
-         construct {
-       
-                Gtk.init ();
-                
-                var window = new Window ();
-                window.title = "Hello, World!";
-                window.border_width = 10;
-                window.window_position = WindowPosition.CENTER;
-                window.set_default_size (350, 70);
-                window.destroy.connect (Gtk.main_quit);
-                
-                var label = new Label ("Hello, World!");
-                
-                window.add (label);
-                window.show_all ();
-                
-                Gtk.main ();
+        public static int main (string[] args) {
+            
+            Gtk.init (ref args);
+            var app = new Application ();
+            app.init ();
 
-       }
-
+            return 0;
+        }
     }
 
-    public static int main (string[] args) {
-        var application = new Diskboot ();
-        return 0;
+    /**
+     * Main application class.
+     */
+    public class Application : Gtk.Application {
+
+        construct {
+           
+            var window = new Window ();
+            window.title = "Diskbook";
+            window.border_width = 10;
+            window.window_position = WindowPosition.CENTER;
+            window.set_default_size (700, 250);
+            window.destroy.connect (Gtk.main_quit);
+
+//            var arquivo = new  GtkFileChooserButton("Selecione o arquivo", GTK_FILE_CHOOSER_ACTION_OPEN);
+                             
+  //          window.add (arquivo);
+            var messenger = new Label ("aaaaa");          
+            gtk_container_add (GTK_CONTAINER (window), messenger); //window.add (messenger);
+            
+
+            var button = new Gtk.Button.with_label ("Click me!");
+            window.add (button);
+
+            window.show_all ();
+        }
+        
+        public void init (){
+            Gtk.main ();
+        }
+    
     }
 
 }
